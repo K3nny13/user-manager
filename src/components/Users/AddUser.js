@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
+import Button from '../UI/Button';
 import Card from '../UI/Card';
-import classes from './AddUser.module.css';
+import styles from './AddUser.module.css';
 
 const AddUser = props => {
   // const [username, setUsername] = useEffect('');
@@ -12,13 +13,13 @@ const AddUser = props => {
   }
 
   return (
-    <Card>
+    <Card className={styles.input}>
       <form onSubmit={submitHandler}>
         <label htmlFor='username'>Username</label>
         <input id='username' type='text'></input>
-        <label htmlFor='age'>Username</label>
+        <label htmlFor='age'>Age</label>
         <input id='age' type='text'></input>
-        <button type='submit'>Add User</button>
+        <Button type='submit'>Add User</Button>
       </form>
     </Card>
   )
