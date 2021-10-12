@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import Button from '../UI/Button'
 import Card from '../UI/Card'
+import ErrorModal from '../UI/ErrorModal'
 import styles from './AddUser.module.css'
 
 const AddUser = (props) => {
   const [username, setUsername] = useState('')
   const [age, setAge] = useState('')
+  const [error, setError] = useState()
 
   const usernameHandler = (event) => {
     setUsername(event.target.value)
@@ -19,10 +21,18 @@ const AddUser = (props) => {
     event.preventDefault()
 
     if (username.trim().length === 0) {
+      setError({
+        title: 'Invalid name',
+        message: 'Please enter a name and age'
+      })
       return
     }
 
     if (+age < 1) {
+      setError({
+        title: 'Invalid age',
+        message: 'Please enter a age'
+      })
       return
     }
     props.onAddUser(username, age)
@@ -31,21 +41,28 @@ const AddUser = (props) => {
     setAge('')
   }
 
+  const resetErrorHandler = () => {
+    setError(null);
+  }
+
   return (
-    <Card className={styles.input}>
-      <form onSubmit={submitHandler}>
-        <label htmlFor='username'>Username</label>
-        <input
-          id='username'
-          type='text'
-          onChange={usernameHandler}
-          value={username}
-        ></input>
-        <label htmlFor='age'>Age</label>
-        <input id='age' type='text' onChange={ageHandler} value={age}></input>
-        <Button type='submit'>Add User</Button>
-      </form>
-    </Card>
+    <div>
+      {error && <ErrorModal title={error.title} message={error.message} resetError={resetErrorHandler} />}
+      <Card className={styles.input}>
+        <form onSubmit={submitHandler}>
+          <label htmlFor='username'>Username</label>
+          <input
+            id='username'
+            type='text'
+            onChange={usernameHandler}
+            value={username}
+          ></input>
+          <label htmlFor='age'>Age</label>
+          <input id='age' type='text' onChange={ageHandler} value={age}></input>
+          <Button type='submit'>Add User</Button>
+        </form>
+      </Card>
+    </div>
   )
 }
 
