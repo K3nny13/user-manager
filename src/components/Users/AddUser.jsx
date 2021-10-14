@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, Fragment, useRef } from 'react'
 import Button from '../UI/Button'
 import Card from '../UI/Card'
 import ErrorModal from '../UI/ErrorModal'
@@ -23,7 +23,7 @@ const AddUser = (props) => {
     if (username.trim().length === 0) {
       setError({
         title: 'Invalid name',
-        message: 'Please enter a name and age'
+        message: 'Please enter a name and age',
       })
       return
     }
@@ -31,7 +31,7 @@ const AddUser = (props) => {
     if (+age < 1) {
       setError({
         title: 'Invalid age',
-        message: 'Please enter a age'
+        message: 'Please enter a age',
       })
       return
     }
@@ -42,12 +42,18 @@ const AddUser = (props) => {
   }
 
   const resetErrorHandler = () => {
-    setError(null);
+    setError(null)
   }
 
   return (
-    <div>
-      {error && <ErrorModal title={error.title} message={error.message} resetError={resetErrorHandler} />}
+    <Fragment>
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          resetError={resetErrorHandler}
+        />
+      )}
       <Card className={styles.input}>
         <form onSubmit={submitHandler}>
           <label htmlFor='username'>Username</label>
@@ -62,7 +68,7 @@ const AddUser = (props) => {
           <Button type='submit'>Add User</Button>
         </form>
       </Card>
-    </div>
+    </Fragment>
   )
 }
 
